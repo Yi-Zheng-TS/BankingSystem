@@ -27,6 +27,7 @@ public:
 	// 访问器
 	string getAdminID() const;
 	string getAdminPin() const;
+	//AdminStatus getStatus() const;
 
 	// 状态管理
 	void setStatus(AdminStatus newStatus);

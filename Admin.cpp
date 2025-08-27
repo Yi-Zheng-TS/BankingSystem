@@ -18,6 +18,10 @@ string Admin::getAdminPin() const {
 	return adminPin;
 }
 
+//AdminStatus Admin::getStatus() const {
+//	return status;
+//}
+
 // ????
 void Admin::setStatus(AdminStatus newStatus) {
 	status = newStatus;

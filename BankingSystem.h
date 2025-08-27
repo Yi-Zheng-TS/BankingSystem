@@ -25,13 +25,16 @@ public:
 
 	// 用户账户操作
 	void createAccount();
+	void addAccount(const Account& acc);
 	Account* findAccount(const string& accountNumber);
 	Admin* findAdmin(const string& adminID);
 
 	// 交易操作
 	void deposit();
 	void withdraw();
-	void transfer();
+	//void transfer();
+	bool transfer(const string& fromNumber, const string& toNumber, double amount, const string& pin);
+	void transferInteractive();
 	void checkBalance();
 
 	// 信息查询

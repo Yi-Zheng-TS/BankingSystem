@@ -4,6 +4,8 @@
 #include <string>
 #include "BankingSystem.h"
 
+class BankingSystem;
+
 class Menu {
 public:
 	static void mainMenu(BankingSystem& bank);
