@@ -7,16 +7,16 @@
 
 using namespace std;
 
-//Account::Account(const string& number, const string& holder, const string& pin, const string& salt, double initialBalance, int status)
-//: number_(number), holder_(holder), hashedPin_(pin),salt_(salt), balance_(initialBalance), status_(AccountStatus::ACTIVE), failedAttempts_(0) {
-//	/*hashedPin = hashPin(pin); // 这里不能再用hashPin()函数将十进制pin值变成哈希值 因为从文档中下载的值已经是哈希值*/
-//}
-
 Account::Account(const string& number, const string& holder, const string& pin, const string& salt, double initialBalance, int status)
-	: number_(number), holder_(holder), salt_(salt), balance_(initialBalance), status_(AccountStatus::ACTIVE), failedAttempts_(0)
-{
-	setPin(pin);
+: number_(number), holder_(holder), hashedPin_(pin),salt_(salt), balance_(initialBalance), status_(AccountStatus::ACTIVE), failedAttempts_(0) {
+	/*hashedPin = hashPin(pin); // 这里不能再用hashPin()函数将十进制pin值变成哈希值 因为从文档中下载的值已经是哈希值*/
 }
+
+//Account::Account(const string& number, const string& holder, const string& pin, const string& salt, double initialBalance, int status)
+//	: number_(number), holder_(holder), salt_(salt), balance_(initialBalance), status_(AccountStatus::ACTIVE), failedAttempts_(0)
+//{
+//	setPin(pin);
+//}
 
 //string Account::hashPin(const string& pin) {
 //	//unsigned char hash[SHA256_DIGEST_LENGTH];

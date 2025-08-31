@@ -11,6 +11,8 @@
 #include <limits>
 #pragma execution_character_set("utf-8")
 
+using namespace std;
+
 BankingSystem::BankingSystem() {
 	/*cout << "[DEBUG] 正在加载数据..." << endl;*/
 	loadData();
@@ -508,7 +510,7 @@ void BankingSystem::withdraw() {
 //	}
 //}
 
-bool BankingSystem::transfer(const std::string& fromNumber, const std::string& toNumber, double amount, const std::string& pin) {
+bool BankingSystem::transfer(const string& fromNumber, const string& toNumber, double amount, const string& pin) {
 
 	Account* fromAccount = findAccount(fromNumber);
 	Account* toAccount = findAccount(toNumber);
@@ -523,6 +525,7 @@ bool BankingSystem::transfer(const std::string& fromNumber, const std::string& t
 		transactions.emplace_back(fromNumber, toNumber, amount, TransactionType::TRANSFER);
 		return true;
 	}
+
 	return false;
 }
 
