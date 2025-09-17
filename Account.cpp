@@ -7,15 +7,15 @@
 
 using namespace std;
 
-Account::Account(const string& number, const string& holder, const string& pin, const string& salt, double initialBalance, int status)
-: number_(number), holder_(holder), hashedPin_(pin),salt_(salt), balance_(initialBalance), status_(AccountStatus::ACTIVE), failedAttempts_(0) {
+Account::Account(const string& number, const string& holder, const string& hashedPin, const string& salt, double initialBalance, int status)
+: number_(number), holder_(holder), hashedPin_(hashedPin),salt_(salt), balance_(initialBalance), status_(AccountStatus::ACTIVE), failedAttempts_(0) {
 	/*hashedPin = hashPin(pin); // 这里不能再用hashPin()函数将十进制pin值变成哈希值 因为从文档中下载的值已经是哈希值*/
 }
 
 //Account::Account(const string& number, const string& holder, const string& pin, const string& salt, double initialBalance, int status)
 //	: number_(number), holder_(holder), salt_(salt), balance_(initialBalance), status_(AccountStatus::ACTIVE), failedAttempts_(0)
 //{
-//	setPin(pin);
+//	hashedPin_ = SecurityUtils::sha256(pin + salt);
 //}
 
 //string Account::hashPin(const string& pin) {
@@ -102,9 +102,11 @@ bool Account::verifyPin(const string& pin) {
 			failedAttempts_ = 0;
 		}
 		else {
-			if (++failedAttempts_ >= 3) status_ = AccountStatus::FROZEN;
+			if (++failedAttempts_ >= 3) {
+				status_ = AccountStatus::FROZEN;
+			}
+			return ok;
 		}
-		return ok;
 	}
 
 	const string candidate = SecurityUtils::sha256(salt_ + pin);

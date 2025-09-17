@@ -107,7 +107,6 @@
     <ClCompile Include="..\Transaction.cpp" />
     <ClCompile Include="AccountTest.cpp" />
     <ClCompile Include="AdminTest.cpp" />
-    <ClCompile Include="BankingSystemTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">

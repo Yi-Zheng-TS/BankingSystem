@@ -27,7 +27,6 @@ TEST(AccountTest, PinLockedAfter3Fails) {
 	EXPECT_EQ(acc.getStatus(), AccountStatus::FROZEN);
 }
 
-
 // 存款相关
 // 4. 测试账户存款功能
 TEST(AccountTest, DepositIncreaseBalance) {
@@ -74,3 +73,65 @@ TEST(AccountTest, WithdrawFailsIfInvalidAmount) {
 	EXPECT_DOUBLE_EQ(acc.getBalance(), 1000.0); // 余额不变
 }
 
+// 转账相关
+// 9. 测试转账成功
+TEST(AccountTest, TransferSuccess) {
+	string hashedPin = "abcdef123456";
+	string salt = "salt123";
+
+	Account lucy("03110001", "Lucy", hashedPin, salt, 500.0, 0);
+	Account joucy("03110002", "Joucy", hashedPin, salt, 200.0, 0);
+
+	bool result = lucy.transfer(joucy, 100.0);
+
+	EXPECT_TRUE(result);
+	EXPECT_DOUBLE_EQ(lucy.getBalance(), 400.0);
+	EXPECT_DOUBLE_EQ(joucy.getBalance(), 300.0);
+}
+
+// 10. 测试转出全部余额 
+TEST(AccountTest, TransferFullBalance) {
+	string hashedPin = "abcdef123456";
+	string salt = "salt123";
+
+	Account lucy("03110001", "Lucy", hashedPin, salt, 500.0, 0);
+	Account joucy("03110002", "Joucy", hashedPin, salt, 200.0, 0);
+
+	bool result = lucy.transfer(joucy, 500.0);
+
+	EXPECT_TRUE(result);
+	EXPECT_DOUBLE_EQ(lucy.getBalance(), 0.0);
+	EXPECT_DOUBLE_EQ(joucy.getBalance(), 700.0);
+}
+
+// 11. 测试余额不足时转账失败
+TEST(AccountTest, TransferInsufficientBalance) {
+	string hashedPin = "abcdef123456";
+	string salt = "salt123";
+
+	Account lucy("03110001", "Lucy", hashedPin, salt, 500.0, 0);
+	Account joucy("03110002", "Joucy", hashedPin, salt, 200.0, 0);
+
+	bool result = lucy.transfer(joucy, 600.0);
+
+	EXPECT_FALSE(result);
+	EXPECT_DOUBLE_EQ(lucy.getBalance(), 500.0);
+	EXPECT_DOUBLE_EQ(joucy.getBalance(), 200.0);
+}
+
+// 12. 测试转账金额为 0 或负数
+TEST(AccountTest, TransferZeroOrNegativeAmount) {
+	string hashedPin = "abcdef123456";
+	string salt = "salt123";
+
+	Account lucy("03110001", "Lucy", hashedPin, salt, 500.0, 0);
+	Account joucy("03110002", "Joucy", hashedPin, salt, 200.0, 0);
+
+	bool result1 = lucy.transfer(joucy, 0.0);
+	bool result2 = lucy.transfer(joucy, -100.0);
+
+	EXPECT_FALSE(result1);
+	EXPECT_FALSE(result2);
+	EXPECT_DOUBLE_EQ(lucy.getBalance(), 500.0);
+	EXPECT_DOUBLE_EQ(joucy.getBalance(), 200.0);
+}
