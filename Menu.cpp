@@ -55,7 +55,7 @@ void Menu::mainMenu(BankingSystem& bank) {
         case 1: bank.createAccount(); break;
         case 2: bank.deposit(); break;
         case 3: bank.withdraw(); break;
-        case 4: bank.transfer(); break;
+        case 4: bank.transferInteractive(); break;
         case 5: bank.checkBalance(); break;
         case 6: bank.showTransactions(); break;
         case 7: bank.showAllAccounts(); break;

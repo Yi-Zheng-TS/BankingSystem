@@ -1,3 +1,3 @@
 # 管理员信息: 管理员账号,PIN,状态
-Neo,admin123,0
-Joucy,admin123,0
+0001,admin123,0
+0002,admin123,0

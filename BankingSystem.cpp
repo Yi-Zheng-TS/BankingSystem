@@ -11,6 +11,8 @@
 #include <limits>
 #pragma execution_character_set("utf-8")
 
+using namespace std;
+
 BankingSystem::BankingSystem() {
 	/*cout << "[DEBUG] 正在加载数据..." << endl;*/
 	loadData();
@@ -350,6 +352,10 @@ Admin* BankingSystem::findAdmin(const string& adminID) {
 	return nullptr;
 }
 
+void BankingSystem::addAccount(const Account& acc) {
+	accounts.push_back(acc);
+}
+
 // 交易操作
 void BankingSystem::deposit() {
 	string number, pin;
@@ -439,68 +445,109 @@ void BankingSystem::withdraw() {
 	return;
 }
 
-void BankingSystem::transfer() {
+//void BankingSystem::transfer() {
+//	string fromNumber, toNumber, pin;
+//	double amount;
+//
+//	Menu::printHeader("转账管理");
+//	cout << "请输入转出账户号码: ";
+//	cin >> fromNumber;
+//
+//	Account* fromAccount = findAccount(fromNumber);
+//	if (!fromAccount) {
+//		cout << "转出账户不存在!\n";
+//		return;
+//	}
+//
+//	if (fromAccount->getStatus() != AccountStatus::ACTIVE) {
+//		cout << "转出账户状态异常，无法操作!\n";
+//		return;
+//	}
+//
+//	cout << "请输入PIN码: ";
+//	cin >> pin;
+//
+//	if (!fromAccount->verifyPin(pin)) {
+//		cout << "PIN码错误!\n";
+//		return;
+//	}
+//
+//	cout << "请输入转入账户号码: ";
+//	cin >> toNumber;
+//
+//	Account* toAccount = findAccount(toNumber);
+//	if (!toAccount) {
+//		cout << "转入账户不存在!\n";
+//		return;
+//	}
+//
+//	if (toAccount->getStatus() != AccountStatus::ACTIVE) {
+//		cout << "转入账户状态异常，无法操作!\n";
+//		return;
+//	}
+//
+//	if (fromNumber == toNumber) {
+//		cout << "不能转账到同一账户!\n";
+//		return;
+//	}
+//
+//	cout << "请输入转账金额: ";
+//	cin >> amount;
+//
+//	if (fromAccount->transfer(*toAccount, amount)) {
+//		// 记录转账交易
+//		transactions.emplace_back(fromNumber, toNumber, amount, TransactionType::TRANSFER);
+//		cout << "转账成功!\n";
+//		cout << "转出账户余额: £"
+//			<< fixed << setprecision(2)
+//			<< fromAccount->getBalance() << endl;
+//		cout << "转入账户余额: £"
+//			<< fixed << setprecision(2)
+//			<< toAccount->getBalance() << endl;
+//	}
+//	else {
+//		cout << "转账失败! 金额无效或余额不足.\n";
+//	}
+//}
+
+bool BankingSystem::transfer(const string& fromNumber, const string& toNumber, double amount, const string& pin) {
+
+	Account* fromAccount = findAccount(fromNumber);
+	Account* toAccount = findAccount(toNumber);
+
+	if (!fromAccount || !toAccount) return false;
+	if (fromAccount->getStatus() != AccountStatus::ACTIVE) return false;
+	if (toAccount->getStatus() != AccountStatus::ACTIVE) return false;
+	if (!fromAccount->verifyPin(pin)) return false;
+	if (fromNumber == toNumber) return false;
+
+	if (fromAccount->transfer(*toAccount, amount)) {
+		transactions.emplace_back(fromNumber, toNumber, amount, TransactionType::TRANSFER);
+		return true;
+	}
+
+	return false;
+}
+
+void BankingSystem::transferInteractive() {
 	string fromNumber, toNumber, pin;
 	double amount;
 
 	Menu::printHeader("转账管理");
 	cout << "请输入转出账户号码: ";
 	cin >> fromNumber;
-
-	Account* fromAccount = findAccount(fromNumber);
-	if (!fromAccount) {
-		cout << "转出账户不存在!\n";
-		return;
-	}
-
-	if (fromAccount->getStatus() != AccountStatus::ACTIVE) {
-		cout << "转出账户状态异常，无法操作!\n";
-		return;
-	}
-
 	cout << "请输入PIN码: ";
 	cin >> pin;
-
-	if (!fromAccount->verifyPin(pin)) {
-		cout << "PIN码错误!\n";
-		return;
-	}
-
 	cout << "请输入转入账户号码: ";
 	cin >> toNumber;
-
-	Account* toAccount = findAccount(toNumber);
-	if (!toAccount) {
-		cout << "转入账户不存在!\n";
-		return;
-	}
-
-	if (toAccount->getStatus() != AccountStatus::ACTIVE) {
-		cout << "转入账户状态异常，无法操作!\n";
-		return;
-	}
-
-	if (fromNumber == toNumber) {
-		cout << "不能转账到同一账户!\n";
-		return;
-	}
-
 	cout << "请输入转账金额: ";
 	cin >> amount;
 
-	if (fromAccount->transfer(*toAccount, amount)) {
-		// 记录转账交易
-		transactions.emplace_back(fromNumber, toNumber, amount, TransactionType::TRANSFER);
+	if (transfer(fromNumber, toNumber, amount, pin)) {
 		cout << "转账成功!\n";
-		cout << "转出账户余额: £"
-			<< fixed << setprecision(2)
-			<< fromAccount->getBalance() << endl;
-		cout << "转入账户余额: £"
-			<< fixed << setprecision(2)
-			<< toAccount->getBalance() << endl;
 	}
 	else {
-		cout << "转账失败! 金额无效或余额不足.\n";
+		cout << "转账失败!\n";
 	}
 }
 

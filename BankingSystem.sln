@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.36105.23 d17.13
+VisualStudioVersion = 17.13.36105.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BankingSystem", "BankingSystem.vcxproj", "{49819D0C-DDFB-4070-9C72-7E827DC8112C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BankingSystemTests", "BankingSystemTests\BankingSystemTests.vcxproj", "{E5F744B8-413C-473D-ABCE-50EF5373A071}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{49819D0C-DDFB-4070-9C72-7E827DC8112C}.Release|x64.Build.0 = Release|x64
 		{49819D0C-DDFB-4070-9C72-7E827DC8112C}.Release|x86.ActiveCfg = Release|Win32
 		{49819D0C-DDFB-4070-9C72-7E827DC8112C}.Release|x86.Build.0 = Release|Win32
+		{E5F744B8-413C-473D-ABCE-50EF5373A071}.Debug|x64.ActiveCfg = Debug|x64
+		{E5F744B8-413C-473D-ABCE-50EF5373A071}.Debug|x64.Build.0 = Debug|x64
+		{E5F744B8-413C-473D-ABCE-50EF5373A071}.Debug|x86.ActiveCfg = Debug|Win32
+		{E5F744B8-413C-473D-ABCE-50EF5373A071}.Debug|x86.Build.0 = Debug|Win32
+		{E5F744B8-413C-473D-ABCE-50EF5373A071}.Release|x64.ActiveCfg = Release|x64
+		{E5F744B8-413C-473D-ABCE-50EF5373A071}.Release|x64.Build.0 = Release|x64
+		{E5F744B8-413C-473D-ABCE-50EF5373A071}.Release|x86.ActiveCfg = Release|Win32
+		{E5F744B8-413C-473D-ABCE-50EF5373A071}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
